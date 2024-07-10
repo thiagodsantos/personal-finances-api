@@ -1,38 +1,38 @@
-package expenses
+package entity
 
 import "github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
 
-type ExpenseRepeatTimesFrequency string
+type RevenueRepeatTimesFrequency string
 
 const (
-	Monthly ExpenseRepeatTimesFrequency = "monthly"
-	Yearly  ExpenseRepeatTimesFrequency = "yearly"
+	Monthly RevenueRepeatTimesFrequency = "monthly"
+	Yearly  RevenueRepeatTimesFrequency = "yearly"
 )
 
-func (e ExpenseRepeatTimesFrequency) IsValid() bool {
-	switch e {
+func (r RevenueRepeatTimesFrequency) IsValid() bool {
+	switch r {
 	case Monthly, Yearly:
 		return true
 	}
 	return false
 }
 
-type Expense struct {
+type Revenue struct {
 	Id                   valueobjects.Id
 	AccountId            valueobjects.Id
 	Amount               valueobjects.Money
 	Date                 valueobjects.Date
 	Description          valueobjects.Text
-	Paid                 valueobjects.Flag
+	Received             valueobjects.Flag
 	Repeat               valueobjects.Flag
 	RepeatTimes          valueobjects.Numeric
-	RepeatTimesFrequency ExpenseRepeatTimesFrequency
+	RepeatTimesFrequency RevenueRepeatTimesFrequency
 }
 
-func GetTotals(expenses []Expense) valueobjects.Money {
+func GetTotals(revenues []Revenue) valueobjects.Money {
 	var total valueobjects.Money
-	for _, e := range expenses {
-		total = total.Sum(e.Amount)
+	for _, r := range revenues {
+		total = total.Sum(r.Amount)
 	}
 	return total
 }

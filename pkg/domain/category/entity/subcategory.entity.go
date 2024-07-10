@@ -1,4 +1,4 @@
-package subcategory
+package entity
 
 import "github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
 

@@ -12,6 +12,7 @@ type AccountRepository interface {
 	DeleteById(id valueobjects.Id) error
 	GetAll() ([]entity.Account, error)
 	GetById(id valueobjects.Id) (entity.Account, error)
+	GetByName(name valueobjects.Name, atype entity.AccountType) (entity.Account, error)
 	Update(account entity.Account) error
 }
 
@@ -37,6 +38,13 @@ func (r repository) GetAll() ([]entity.Account, error) {
 func (r repository) GetById(id valueobjects.Id) (entity.Account, error) {
 	fmt.Println("AccountRepositoryImpl.GetById")
 	fmt.Println(id)
+	return entity.Account{}, nil
+}
+
+func (r repository) GetByName(name valueobjects.Name, atype entity.AccountType) (entity.Account, error) {
+	fmt.Println("AccountRepositoryImpl.GetByName")
+	fmt.Println(name)
+	fmt.Println(atype)
 	return entity.Account{}, nil
 }
 

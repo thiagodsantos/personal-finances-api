@@ -12,6 +12,7 @@ type CategoryRepository interface {
 	DeleteById(id valueobjects.Id) error
 	GetAll() ([]entity.Category, error)
 	GetById(id valueobjects.Id) (entity.Category, error)
+	GetByName(name valueobjects.Name) (entity.Category, error)
 	Update(category entity.Category) error
 	GetSubcategoriesByCategoryId(id valueobjects.Id) ([]entity.Subcategory, error)
 }
@@ -38,6 +39,12 @@ func (r repository) GetAll() ([]entity.Category, error) {
 func (r repository) GetById(id valueobjects.Id) (entity.Category, error) {
 	fmt.Println("CategoryRepositoryImpl.GetById")
 	fmt.Println(id)
+	return entity.Category{}, nil
+}
+
+func (r repository) GetByName(name valueobjects.Name) (entity.Category, error) {
+	fmt.Println("CategoryRepositoryImpl.GetByName")
+	fmt.Println(name)
 	return entity.Category{}, nil
 }
 

@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/thiagodsantos/personal-finances-api/pkg/domain/account/entity"
 	"github.com/thiagodsantos/personal-finances-api/pkg/domain/account/repository"
 	"github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
@@ -26,6 +28,15 @@ func (ca *CreateAccount) Execute(input CreateAccountInput) error {
 	err := account.IsValid()
 	if err != nil {
 		return err
+	}
+
+	exists, err := ca.repo.GetByName(account.Name, account.Type)
+	if err != nil {
+		return err
+	}
+
+	if exists.Id != "" {
+		return fmt.Errorf("account already exists with name %s with type %s", account.Name, account.Type)
 	}
 
 	err = ca.repo.Create(account)

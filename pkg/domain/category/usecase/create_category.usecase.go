@@ -1,6 +1,8 @@
 package usecase
 
 import (
+	"fmt"
+
 	"github.com/thiagodsantos/personal-finances-api/pkg/domain/category/entity"
 	"github.com/thiagodsantos/personal-finances-api/pkg/domain/category/repository"
 	"github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
@@ -24,6 +26,15 @@ func (cc *CreateCategory) Execute(input CreateCategoryInput) error {
 	err := category.IsValid()
 	if err != nil {
 		return err
+	}
+
+	exists, err := cc.repo.GetByName(category.Name)
+	if err != nil {
+		return err
+	}
+
+	if exists.Id != "" {
+		return fmt.Errorf("category already exists with name %s", category.Name)
 	}
 
 	err = cc.repo.Create(category)

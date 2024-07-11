@@ -24,7 +24,7 @@ func (a AccountType) IsValid() error {
 }
 
 type Account struct {
-	ID          valueobjects.Id
+	Id          valueobjects.Id
 	Name        valueobjects.Name
 	Description valueobjects.Text
 	Type        AccountType

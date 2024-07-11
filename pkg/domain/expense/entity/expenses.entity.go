@@ -1,6 +1,10 @@
 package entity
 
-import "github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
+import (
+	"fmt"
+
+	"github.com/thiagodsantos/personal-finances-api/pkg/valueobjects"
+)
 
 type ExpenseRepeatTimesFrequency string
 
@@ -9,12 +13,12 @@ const (
 	Yearly  ExpenseRepeatTimesFrequency = "yearly"
 )
 
-func (e ExpenseRepeatTimesFrequency) IsValid() bool {
+func (e ExpenseRepeatTimesFrequency) IsValid() error {
 	switch e {
 	case Monthly, Yearly:
-		return true
+		return nil
 	}
-	return false
+	return fmt.Errorf("invalid expense repeat times frequency")
 }
 
 type Expense struct {
@@ -27,6 +31,22 @@ type Expense struct {
 	Repeat               valueobjects.Flag
 	RepeatTimes          valueobjects.Numeric
 	RepeatTimesFrequency ExpenseRepeatTimesFrequency
+}
+
+func (e Expense) IsValid() error {
+	var err []error
+
+	err = append(err, e.Amount.IsValid())
+	err = append(err, e.Date.IsValid())
+	err = append(err, e.RepeatTimesFrequency.IsValid())
+
+	for _, e := range err {
+		if e != nil {
+			return e
+		}
+	}
+
+	return nil
 }
 
 func GetTotals(expenses []Expense) valueobjects.Money {

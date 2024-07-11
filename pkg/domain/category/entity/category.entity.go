@@ -8,3 +8,12 @@ type Category struct {
 	Name          valueobjects.Name
 	Subcategories []Subcategory
 }
+
+func (c Category) IsValid() error {
+	err := c.Name.IsValid()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

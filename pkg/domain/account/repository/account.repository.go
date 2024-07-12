@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"database/sql"
 	"fmt"
 
 	"github.com/thiagodsantos/personal-finances-api/pkg/domain/account/entity"
@@ -16,7 +17,9 @@ type AccountRepository interface {
 	Update(account entity.Account) error
 }
 
-type repository struct{}
+type repository struct {
+	db *sql.DB
+}
 
 func (r repository) Create(account entity.Account) error {
 	fmt.Println("AccountRepositoryImpl.Create")
